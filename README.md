@@ -1,16 +1,31 @@
-# YMS Management Presentation
+# YMS Interactive Management Demo
 
-Static HTML/CSS/JS presentation for a proposed Yard Management System.
+A static, browser-based prototype demonstrating a proposed Yard Management System.
 
 ## Run locally
 Open `index.html` in a browser.
 
-## Deploy on GitHub Pages
-1. Create a new GitHub repository, e.g. `yms-management-presentation`.
-2. Upload `index.html` (and this README if desired).
-3. Go to **Settings → Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Select `main` and `/ (root)`, then Save.
-6. GitHub will provide the public Pages URL.
+## GitHub Pages
+1. Create/use a GitHub repository.
+2. Upload `index.html`, `style.css`, `script.js`.
+3. Commit to `main`.
+4. Go to **Settings → Pages**.
+5. Choose **Deploy from a branch**.
+6. Select `main` and `/ (root)**.
+7. Save.
 
-No server, database, framework, npm, or build step is required.
+The site has no backend and no dependencies. It is a simulation/prototype only.
+
+## Demo flow
+Use **Simulate Truck Arrival** to demonstrate:
+
+Appointment
+→ ANPR detection
+→ Appointment/vehicle match
+→ Gate In
+→ Weighbridge
+→ Loading/Unloading
+→ Gate Out
+→ Automatic notification
+
+The dashboard also includes appointments, truck visits, exceptions and notifications.
