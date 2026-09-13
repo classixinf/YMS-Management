@@ -1,164 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YMS Control Tower — Interactive Demo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YMS Control Tower — Management Demo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">Y</div>
-        <div><strong>YMS</strong><span>CONTROL TOWER</span></div>
-      </div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">Y</div><div><b>YMS</b><span>Control Tower</span></div></div>
+    <div class="demo-pill">● MANAGEMENT DEMO</div>
+    <nav>
+      <button class="nav active" data-view="control">⌂ <span>Control Tower</span></button>
+      <button class="nav" data-view="gate">◉ <span>Gate & ANPR</span></button>
+      <button class="nav" data-view="appointments">▦ <span>Appointments</span></button>
+      <button class="nav" data-view="visits">▣ <span>Truck Visits</span></button>
+      <button class="nav" data-view="exceptions">⚠ <span>Exceptions <em>1</em></span></button>
+      <button class="nav" data-view="notifications">♢ <span>Notifications</span></button>
+    </nav>
+    <div class="side-bottom">
+      <div class="system-title">SYSTEM STATUS</div>
+      <div class="status"><i></i> ANPR Gateway <b>Online</b></div>
+      <div class="status"><i></i> YMS Core <b>Online</b></div>
+      <div class="status"><i></i> Weighbridge <b>Online</b></div>
+      <div class="status"><i></i> CCTV <b>Online</b></div>
+    </div>
+  </aside>
 
-      <div class="sidebar-section">
-        <div class="side-label">WORKSPACE</div>
-        <button class="nav active" data-view="dashboard">◈ <span>Control Tower</span></button>
-        <button class="nav" data-view="appointments">▣ <span>Appointments</span></button>
-        <button class="nav" data-view="visits">◉ <span>Truck Visits</span></button>
-        <button class="nav" data-view="exceptions">⚠ <span>Exceptions</span><b id="exceptionBadge">1</b></button>
-        <button class="nav" data-view="notifications">♧ <span>Notifications</span></button>
-      </div>
+  <main>
+    <header class="topbar">
+      <div><div class="eyebrow">WAREHOUSE / YARD MANAGEMENT</div><h1 id="pageTitle">Control Tower</h1></div>
+      <div class="top-actions"><span class="clock" id="clock"></span><button class="reset" id="resetBtn">Reset Demo</button></div>
+    </header>
 
-      <div class="sidebar-section">
-        <div class="side-label">SYSTEMS</div>
-        <div class="system-row"><i class="dot green"></i> ANPR</div>
-        <div class="system-row"><i class="dot green"></i> Weighbridge</div>
-        <div class="system-row"><i class="dot green"></i> CCTV</div>
-        <div class="system-row"><i class="dot green"></i> YMS Core</div>
-      </div>
-
-      <div class="sidebar-bottom">
-        <div class="demo-box">
-          <small>DEMO MODE</small>
-          <p>All events are simulated locally. No real cameras, GPS or gates are connected.</p>
-        </div>
-        <div class="user"><div class="avatar">MA</div><div><b>Operations</b><span>Control user</span></div></div>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
+    <section id="control" class="view active">
+      <div class="hero">
         <div>
-          <div class="eyebrow">WAREHOUSE OPERATIONS</div>
-          <h1 id="pageTitle">Control Tower</h1>
-        </div>
-        <div class="top-actions">
-          <div class="live"><i class="dot green"></i> SYSTEM ONLINE</div>
-          <button class="icon-btn" id="resetBtn" title="Reset demo">↻</button>
-          <div class="date" id="clock"></div>
-        </div>
-      </header>
-
-      <section id="dashboard" class="view active-view">
-        <div class="hero-row">
-          <div>
-            <h2>Good afternoon.</h2>
-            <p>Monitor expected, arriving, active and completed truck visits from one place.</p>
-          </div>
-          <button class="primary" id="openSimulation">▶ Simulate Truck Arrival</button>
-        </div>
-
-        <div class="stats">
-          <div class="stat"><span>EXPECTED TODAY</span><strong id="statExpected">12</strong><small>appointments</small></div>
-          <div class="stat"><span>IN YARD</span><strong id="statYard">3</strong><small>currently on site</small></div>
-          <div class="stat"><span>WAITING</span><strong id="statWaiting">1</strong><small>for operation</small></div>
-          <div class="stat"><span>COMPLETED</span><strong id="statCompleted">8</strong><small>visits today</small></div>
-          <div class="stat"><span>AVG. DWELL</span><strong id="statDwell">31m</strong><small>gate-in to gate-out</small></div>
-        </div>
-
-        <div class="section-head"><div><span class="eyebrow">LIVE YARD</span><h3>Truck movement</h3></div><span class="updated">Updated just now</span></div>
-        <div class="yard-card">
-          <div class="yard-map">
-            <div class="gate-label">GATE 01</div>
-            <div class="road r1"></div>
-            <div class="road r2"></div>
-            <div class="zone gate-zone">ENTRY</div>
-            <div class="zone weigh-zone">WEIGHBRIDGE</div>
-            <div class="zone yard-zone">YARD</div>
-            <div class="dock d1">DOCK 01</div><div class="dock d2">DOCK 02</div><div class="dock d3">DOCK 03</div>
-            <div class="truck-marker t1" id="yardTruck1">🚛</div>
-            <div class="truck-marker t2">🚛</div>
-            <div class="truck-marker t3">🚛</div>
-          </div>
-          <div class="yard-side">
-            <div class="side-title">CURRENTLY ON SITE</div>
-            <div class="yard-truck"><span class="truck-icon">🚛</span><div><b>BD-15-1234</b><small>ABC Raw Materials</small></div><em class="status blue">UNLOADING</em></div>
-            <div class="yard-truck"><span class="truck-icon">🚛</span><div><b>Dhaka-Metro-TA-7788</b><small>Company Fleet</small></div><em class="status amber">WAITING</em></div>
-            <div class="yard-truck"><span class="truck-icon">🚛</span><div><b>BD-14-4567</b><small>XYZ Industries</small></div><em class="status green-status">WEIGHING</em></div>
+          <div class="eyebrow">REAL-TIME OPERATION</div>
+          <h2>Know every truck.<br><strong>From arrival to exit.</strong></h2>
+          <p>ANPR identifies the actual vehicle at the gate. YMS matches it to the appointment and orchestrates the complete visit.</p>
+          <div class="hero-actions">
+            <button class="primary" id="validDemo">▶ Simulate Valid Truck Arrival</button>
+            <button class="danger-outline" id="mismatchDemo">⚠ Simulate ANPR Mismatch</button>
           </div>
         </div>
-
-        <div class="two-col">
-          <div class="panel">
-            <div class="panel-head"><div><span class="eyebrow">RECENT EVENTS</span><h3>Live activity</h3></div></div>
-            <div id="activityFeed" class="feed"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><div><span class="eyebrow">TODAY</span><h3>Performance</h3></div></div>
-            <div class="performance">
-              <div class="perf-row"><span>Appointment adherence</span><b>91%</b></div><div class="bar"><i style="width:91%"></i></div>
-              <div class="perf-row"><span>Average waiting time</span><b>11m</b></div><div class="bar"><i style="width:37%"></i></div>
-              <div class="perf-row"><span>On-time gate-out</span><b>88%</b></div><div class="bar"><i style="width:88%"></i></div>
-              <div class="perf-row"><span>Weight variance</span><b>0.7%</b></div><div class="bar"><i style="width:18%"></i></div>
-            </div>
-          </div>
+        <div class="flow-mini">
+          <div class="flow-node active">ANPR<strong>Detect</strong></div><span>→</span>
+          <div class="flow-node">YMS<strong>Match</strong></div><span>→</span>
+          <div class="flow-node">Gate<strong>Enter</strong></div><span>→</span>
+          <div class="flow-node">Yard<strong>Operate</strong></div><span>→</span>
+          <div class="flow-node">ANPR<strong>Exit</strong></div>
         </div>
-      </section>
-
-      <section id="appointments" class="view">
-        <div class="hero-row"><div><h2>Appointments</h2><p>Planned visits waiting to become actual truck visits.</p></div><button class="primary" id="newAppointment">＋ New Appointment</button></div>
-        <div class="panel table-panel"><table><thead><tr><th>Appointment</th><th>Supplier / Customer</th><th>Purpose</th><th>Expected</th><th>Truck</th><th>Owner</th><th>Status</th></tr></thead><tbody id="appointmentTable"></tbody></table></div>
-      </section>
-
-      <section id="visits" class="view">
-        <div class="hero-row"><div><h2>Truck Visits</h2><p>Actual movements captured by the YMS.</p></div><button class="primary" id="openSimulation2">▶ Simulate Visit</button></div>
-        <div class="panel table-panel"><table><thead><tr><th>Visit</th><th>Truck</th><th>Type</th><th>Gate In</th><th>Operation</th><th>Gate Out</th><th>Total</th><th>Status</th></tr></thead><tbody id="visitTable"></tbody></table></div>
-      </section>
-
-      <section id="exceptions" class="view">
-        <div class="hero-row"><div><h2>Exceptions</h2><p>Events requiring human verification before the normal workflow continues.</p></div></div>
-        <div id="exceptionList" class="exception-grid"></div>
-      </section>
-
-      <section id="notifications" class="view">
-        <div class="hero-row"><div><h2>Notifications</h2><p>Automatic updates sent to the person responsible for the appointment.</p></div></div>
-        <div id="notificationList" class="notification-list"></div>
-      </section>
-    </main>
-  </div>
-
-  <div class="modal hidden" id="simulationModal">
-    <div class="modal-card wide">
-      <button class="close" id="closeModal">×</button>
-      <div class="eyebrow">LIVE SIMULATION</div>
-      <h2>Truck arrival workflow</h2>
-      <p class="modal-sub">Watch how an appointment becomes a verified truck visit and eventually closes at Gate Out.</p>
-      <div class="scenario">
-        <div><span>APPOINTMENT</span><b>APT-1042</b><small>ABC Raw Materials</small></div>
-        <div><span>EXPECTED</span><b>10:40–11:00</b><small>Raw Material A · 25,000 kg</small></div>
-        <div><span>OWNER</span><b>Procurement</b><small>Mohammed Ali</small></div>
       </div>
-      <div class="simulation">
-        <div class="sim-steps">
-          <div class="sim-step current" data-step="0"><i>1</i><span>Appointment</span></div>
-          <div class="sim-line"></div><div class="sim-step" data-step="1"><i>2</i><span>ANPR</span></div>
-          <div class="sim-line"></div><div class="sim-step" data-step="2"><i>3</i><span>Match</span></div>
-          <div class="sim-line"></div><div class="sim-step" data-step="3"><i>4</i><span>Gate In</span></div>
-          <div class="sim-line"></div><div class="sim-step" data-step="4"><i>5</i><span>Weigh</span></div>
-          <div class="sim-line"></div><div class="sim-step" data-step="5"><i>6</i><span>Operate</span></div>
-          <div class="sim-line"></div><div class="sim-step" data-step="6"><i>7</i><span>Gate Out</span></div>
+
+      <div class="kpis">
+        <div class="kpi"><span>Expected Today</span><b id="expectedKpi">24</b><small>Appointments</small></div>
+        <div class="kpi"><span>In Yard</span><b id="yardKpi">3</b><small>Active visits</small></div>
+        <div class="kpi"><span>Waiting</span><b id="waitingKpi">1</b><small>Need attention</small></div>
+        <div class="kpi"><span>Avg. Dwell</span><b id="dwellKpi">26m</b><small>Today</small></div>
+        <div class="kpi good"><span>ANPR Match Rate</span><b id="matchKpi">98.7%</b><small>Automatic identification</small></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel gate-panel">
+          <div class="panel-head"><div><h3>Gate 01 — Live ANPR</h3><span>Camera + plate recognition</span></div><span class="live">● LIVE</span></div>
+          <div class="camera">
+            <div class="camera-label">CAM-01 • GATE IN</div>
+            <div class="road"></div><div class="truck">🚛</div>
+            <div class="plate-overlay"><span>DETECTED</span><b id="livePlate">BD-15-1234</b><small>98.7% confidence</small></div>
+            <div class="scanline"></div>
+          </div>
+          <div class="anpr-result">
+            <div><span>ANPR IDENTIFICATION</span><b id="anprPlate">BD-15-1234</b></div>
+            <div class="match-badge" id="anprBadge">✓ MATCHED</div>
+          </div>
         </div>
-        <div id="simContent" class="sim-content"></div>
-        <div class="sim-actions"><button class="secondary" id="simBack" disabled>Back</button><button class="primary" id="simNext">Start Arrival →</button></div>
+
+        <div class="panel">
+          <div class="panel-head"><div><h3>Truck Journey</h3><span>Selected active visit</span></div><button class="link-btn" id="openGate">Open Gate Demo</button></div>
+          <div class="journey">
+            <div class="journey-item done"><i>✓</i><div><b>ANPR detected</b><span>BD-15-1234 • 10:42:18</span></div></div>
+            <div class="journey-item done"><i>✓</i><div><b>Appointment matched</b><span>APT-1042 • ABC Raw Materials</span></div></div>
+            <div class="journey-item active"><i>●</i><div><b>Gate In</b><span>Entry approved • visit created</span></div></div>
+            <div class="journey-item"><i>4</i><div><b>Weighbridge</b><span>Gross / tare / net</span></div></div>
+            <div class="journey-item"><i>5</i><div><b>Yard operation</b><span>Loading / unloading</span></div></div>
+            <div class="journey-item"><i>6</i><div><b>ANPR Gate Out</b><span>Close visit + notify owner</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><div><h3>Live Yard</h3><span>Operational position and capacity</span></div><span class="capacity">Capacity 62% • 31 / 50 slots</span></div>
+        <div class="yard">
+          <div class="gatebox">GATE 01<br><small>ANPR IN</small></div>
+          <div class="lane">→ → →</div>
+          <div class="zone"><b>WEIGHBRIDGE</b><small>WB-01</small><div class="yard-truck t1">🚛</div></div>
+          <div class="zone"><b>YARD QUEUE</b><small>WAITING AREA</small><div class="yard-truck t2">🚚</div></div>
+          <div class="dock"><b>DOCK 01</b><small>LOADING</small></div>
+          <div class="dock occupied"><b>DOCK 02</b><small>UNLOADING</small><div class="yard-truck t3">🚛</div></div>
+          <div class="dock"><b>DOCK 03</b><small>AVAILABLE</small></div>
+          <div class="gatebox exit">GATE 02<br><small>ANPR OUT</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gate" class="view">
+      <div class="section-title"><div><div class="eyebrow">GATE OPERATIONS</div><h2>ANPR Gate Console</h2><p>The gate is where the physical truck becomes a digital YMS visit.</p></div><button class="primary" id="gateSim">▶ Run Gate Simulation</button></div>
+      <div class="gate-console">
+        <div class="camera large"><div class="camera-label">CAM-01 • LIVE SIMULATION</div><div class="road"></div><div class="truck">🚛</div><div class="plate-overlay"><span id="gateState">READY</span><b id="gatePlate">BD-15-1234</b><small id="gateConfidence">Waiting for vehicle...</small></div><div class="scanline"></div></div>
+        <div class="decision-card">
+          <div class="decision-head"><span>YMS DECISION ENGINE</span><b id="decisionStatus">READY</b></div>
+          <div class="decision-row"><span>ANPR plate</span><b id="dPlate">—</b></div>
+          <div class="decision-row"><span>Appointment</span><b id="dAppointment">—</b></div>
+          <div class="decision-row"><span>Supplier</span><b id="dSupplier">—</b></div>
+          <div class="decision-row"><span>Owner</span><b id="dOwner">—</b></div>
+          <div class="decision-row"><span>Match confidence</span><b id="dConfidence">—</b></div>
+          <div class="decision-action" id="decisionAction">Start the simulation to see the decision.</div>
+        </div>
+      </div>
+      <div class="anpr-explain">
+        <div class="big-number">01</div><div><h3>Why ANPR is critical</h3><p>Appointments tell YMS <b>who is expected</b>. ANPR tells YMS <b>who actually arrived</b>. That bridge enables automatic matching, gate decisions, visit creation, dwell-time tracking and automated gate-out closure.</p></div>
+      </div>
+    </section>
+
+    <section id="appointments" class="view">
+      <div class="section-title"><div><div class="eyebrow">PLANNING</div><h2>Appointments</h2><p>Expected trucks become the reference point for gate matching.</p></div><button class="primary" id="newAppt">+ New Appointment</button></div>
+      <div class="table panel"><table><thead><tr><th>ID</th><th>Supplier</th><th>Purpose</th><th>Window</th><th>Truck</th><th>Owner</th><th>Status</th></tr></thead><tbody id="apptBody"></tbody></table></div>
+    </section>
+
+    <section id="visits" class="view">
+      <div class="section-title"><div><div class="eyebrow">EXECUTION</div><h2>Truck Visits</h2><p>One digital record from gate-in to gate-out.</p></div></div>
+      <div class="table panel"><table><thead><tr><th>Visit</th><th>Truck</th><th>Company</th><th>Gate In</th><th>Current Step</th><th>Gate Out</th><th>Dwell</th></tr></thead><tbody id="visitBody"></tbody></table></div>
+    </section>
+
+    <section id="exceptions" class="view">
+      <div class="section-title"><div><div class="eyebrow">CONTROL</div><h2>Exceptions</h2><p>Automation stops safely when the actual truck does not match the expected visit.</p></div></div>
+      <div class="exception-card panel">
+        <div class="exception-icon">⚠</div>
+        <div class="exception-main"><span>EX-019 • ANPR MATCH</span><h3>Truck / appointment mismatch</h3><p>Appointment APT-1042 expects <b>BD-15-1234</b>, but ANPR detected <b>BD-15-5678</b> with 97.9% confidence.</p><div class="exception-actions"><button class="primary" id="verifyBtn">Verify / Reassign</button><button class="ghost" id="rejectBtn">Reject Entry</button></div></div>
+        <div class="exception-side"><b>GATE 01</b><span>ENTRY BLOCKED</span><small>Operator action required</small></div>
+      </div>
+    </section>
+
+    <section id="notifications" class="view">
+      <div class="section-title"><div><div class="eyebrow">ACCOUNTABILITY</div><h2>Notifications</h2><p>Appointment owners receive the operational outcome automatically.</p></div></div>
+      <div class="notifications" id="notificationsList"></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal hidden" id="simModal">
+  <div class="modal-card">
+    <div class="modal-head"><div><div class="eyebrow">LIVE SYSTEM SIMULATION</div><h2 id="modalTitle">Truck Arrival</h2></div><button class="close" id="closeModal">×</button></div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div class="sim-layout">
+      <div class="sim-visual"><div class="camera"><div class="camera-label" id="modalCameraLabel">GATE 01 • ANPR</div><div class="road"></div><div class="truck" id="modalTruck">🚛</div><div class="plate-overlay"><span id="modalState">WAITING</span><b id="modalPlate">BD-15-1234</b><small id="modalSub">Vehicle approaching gate...</small></div><div class="scanline"></div></div></div>
+      <div class="sim-info">
+        <div class="step-label" id="stepLabel">STEP 1 OF 7</div><h3 id="stepTitle">Appointment expected</h3><p id="stepText">YMS has an expected visit waiting for the truck.</p>
+        <div class="data-grid" id="dataGrid"></div>
+        <div class="event-log" id="eventLog"></div>
       </div>
     </div>
+    <div class="modal-foot"><span id="stepStatus">Automatic processing enabled</span><button class="primary" id="nextStep">Start</button></div>
   </div>
+</div>
 
-  <div class="toast-stack" id="toastStack"></div>
-  <script src="script.js"></script>
+<div class="toast hidden" id="toast"></div>
+<script src="script.js"></script>
 </body>
 </html>
